@@ -6,34 +6,46 @@
 
 :root {
     --font-size-xs: 14px;
-    --font-size-md: 18px;
-    --background-color: #778da9;
-    --color-primary: #fdfdfd;
-    --color-secondary: #415a77;
-    --color-tertiary: #e3e3e3;
-    --color-quaternary: #808080;
+    --font-size-base: 16px;
+    --font-size-lg: 24px;
+
+    --form-text-color-primary: #6e6e6e;
+    --form-primary-color: #fdfdfd;
+    --form-secondary-color: #49586d;
+    --form-tertiary-color: #e3e3e3;
+
     --border-radius: 0.5rem
 }
 
 body {
-    display: grid;
-    grid-template-columns: 1;
     font-family: system-ui, sans-serif;
-    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    font-size: var(--font-size-base);
+    background-color: var(--form-secondary-color);
+}
+
+h3 {
+    font-size: var(--font-size-lg);
+    color: var(--form-text-color-primary);
 }
 
 .my-form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    overflow: hidden;
-    margin-inline: 5%;
     padding: 40px 30px;
-    margin: 6rem 5%;
-    width: auto;
-    background: var(--color-primary);
+    width: 100%;
+    background: var(--form-primary-color);
     border-radius: var(--border-radius);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+@media (min-width: 700px) {
+    .my-form {
+        width: 50%;
+    }
 }
 .input-group {
     position: relative;
@@ -45,28 +57,25 @@ body {
     left: 14px;
     padding: 0px 6px;
     font-size: var(--font-size-xs);
-    color: var(--color-quaternary);
-    background-color: var(--color-primary);
-}
-.my-label:hover {
-    color: var(--color-secondary);
+    color: var(--form-text-color-primary);
+    background-color: var(--form-primary-color);
 }
 .my-input {
     outline: none;
     padding: 16px 18px;
     width: 100%;
-    font-size: 15px;
+    font-size: var(--font-size-base);
     border-style: none;
-    border: 2px solid var(--color-tertiary);
+    border: 2px solid var(--form-tertiary-color);
     border-radius: var(--border-radius);
     transition: border 0.2s ease-in-out;
 }
 .my-input::placeholder {
+    font-size: var(--font-size-xs);
     opacity: .6;
-    color: var(--color-quaternary);
 }
 .my-input:focus {
-    border-color: var(--color-secondary);
+    border-color: var(--form-secondary-color);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 textarea {
@@ -80,6 +89,7 @@ textarea {
 .button-group {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 10px;
     width: auto;
 }
@@ -92,31 +102,29 @@ textarea {
         max-width: 200px;
     }
 }
-
 .my-button {
     cursor: pointer;
     flex: 1;
-    padding-block: 15px;
-    font-size: 15px;
+    padding-block: 1rem;
+    font-size: var(--font-size-base);
     font-weight: bold;
     border: none;
     border-radius: var(--border-radius);
-    color: var(--color-quaternary);
 }
 .my-button:first-of-type {
-    background: var(--color-secondary);
-    color: var(--color-primary);
+    color: var(--form-primary-color);
+    background-color: var(--form-secondary-color);
     transition: 0.1s ease-in;
 }
 .my-button:first-of-type:hover {
-    background: var(--color-secondary);
-    color: var(--color-primary);
+    color: var(--form-primary-color);
     opacity: .8;
     transform: scale(1.025);
 }
 .my-button:first-of-type:active {
     transform: scale(0.95);
 }
-.my-button:last-of-type:hover {
-    opacity: 0.8;
+.my-button:last-of-type {
+    color: var(--form-text-color-primary);
+    background-color: transparent;
 }
