@@ -96,6 +96,7 @@ a:hover {
 }
 .my-checkbox {
     appearance: none;
+    -webkit-appearance: none;
     cursor: pointer;
     width: 1.2rem;
     height: 1.2rem;
