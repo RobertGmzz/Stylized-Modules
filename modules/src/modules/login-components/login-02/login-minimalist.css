@@ -12,7 +12,6 @@
     --form-text-color-primary: #6e6e6e;
     --form-primary-color: #fdfdfd;
     --form-secondary-color: #49586d;
-    --form-secondary-color-variant: #647083;
     --form-tertiary-color: #e3e3e3;
 
     --border-radius: 0.5rem
@@ -29,7 +28,6 @@ body {
     height: 100vh;
     font-size: var(--font-size-base);
     background-color: var(--form-secondary-color);
-    background: linear-gradient(45deg, var(--form-secondary-color) 60%, var(--form-secondary-color-variant) 100%);
 }
 
 h3 {
