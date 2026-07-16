@@ -6,12 +6,12 @@
 
 :root {
     --font-size: 10px;
-    --background-color: #282c33;
+    --background-color: #272b1e;
     --text-color: #4b4b4b;
     --button-color: #f3f4f6;
     --buton-border-color: #cccccc;
     --button-shadow: inset 0px 5px 0px -2px #ffffff, 1px 3px 3px -2px #b3b3b3;
-    --keyboard-color: #e5e5e5;
+    --keyboard-color: #e0e0e0;
     --keyboard-radius: 1.25rem;
     --button-radius: 0.5rem;
 }
@@ -30,16 +30,19 @@ body {
     background-color: var(--background-color);
 }
 
+.audio {
+    display: none;
+}
+
 .keyboard {
+    user-select: none;
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     gap: 0.25rem;
     padding: 0.65rem;
-    width: 100%;
     aspect-ratio: 16 / 7;
-    border: 1px solid;
     border-radius: var(--keyboard-radius);
-    background-color: var(--keyboard-color);
+    background: var(--keyboard-color);
 }
 
 /*ALL ROWS AND BUTTONS*/
