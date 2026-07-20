@@ -28,6 +28,10 @@ body {
     background: linear-gradient(45deg, #292764 40%, #822b8d 100%);
 }
 
+.audio {
+    display: none;
+}
+
 .player-widget {
     padding: 0.75rem;
     width: 360px;

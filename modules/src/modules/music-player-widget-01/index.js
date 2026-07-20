@@ -1,43 +1,114 @@
-/*LIKE/UNLIKE SONG*/
+const songs = [
+    { 
+        title: "Toxicity", 
+        artist: "System of a Down", 
+        album: "Toxicity", 
+        duration: 240, 
+        cover: "./images/toxicity-cover.webp",
+        audio: "./songs/alexguz-funk.mp3",
+    },
+    { 
+        title: "Chop Suey", 
+        artist: "System of a Down", 
+        album: "Toxicity", 
+        duration: 240, 
+        cover: "./images/toxicity-cover.webp",
+        audio: "./songs/kontraa-water.mp3",
+    },
+    { 
+        title: "B.Y.O.B", 
+        artist: "System of a Down", 
+        album: "Mezmerize", 
+        duration: 240, 
+        cover: "./images/mezmerize-cover.webp",
+        audio: "./songs/mickeyscat-moment.mp3",
+    },
+]
 
-const heartSVG = document.getElementById('heart')
+let currentSong = 0
+const audio = document.getElementById("audio")
 
-heartSVG.addEventListener('click', () => {
-    if (heartSVG.getAttribute('fill') === 'none') {
-        heartSVG.setAttribute('fill', 'currentColor') 
+function loadSong(index) {
+    const song = songs[index]
+
+    document.getElementById("title").textContent = song.title
+    document.getElementById("artist").textContent = song.artist
+    document.getElementById("album").textContent = song.album
+    document.getElementById("cover").src = song.cover
+    audio.src = song.audio
+    audio.volume = .1
+    audio.play()
+}
+
+/*Pause/Play song*/
+document.getElementById("pause").addEventListener("click", () => {
+    
+    if (audio.paused) {
+        audio.play()
     } else {
-        heartSVG.setAttribute('fill', 'none')
+        audio.pause()
     }
 })
 
+/*Reload song*/
+document.getElementById("reload").addEventListener("click", () => {
+    audio.currentTime = 0
+    audio.play()
+})
 
-/*MOSTRAR CANCION*/
-/* 
--crear un array de objetos con los datos de la cancion (imagen, titulo, album y banda, duracion) (fuente)
--asignar cada dato a su elemento correspondiente (usar el primer objeto del array para asignar cada valor)
-*/
+/*Next song*/
+document.getElementById("next-song").addEventListener("click", () => {
+    currentSong++
 
-/*CHANGE SONG*/
-/*
--variable o funcion que recorre el array de forma reversible
--crear funcion que actualiza cada valor de cada elemento por el siguiente o anterior de la lista
--capturar un evento de click y asignarselo a cada boton, uno para ir hacia el siguiente y otro hacia el anterior de la lista
-*/
+    if (currentSong >= songs.length) {
+        currentSong = 0
+    }
 
-/*PLAY / PAUSE SONG */
-/*
--crear variable que obtiene la duracion de la cancion y calcula un porcentaje que sera asignado al input range
--actualizar porcentaje del input range cada segundo hasta llegar al final
--crear variable que se va actualizando y mostrando los minutos que avanza hasta llegar al final
--establecer la duracion de la cancion y asignarselo al elemento time final
--capturar un evento de click que comience a contar los minutos transcurridos hasta el valor de la variable final
--con el mismo evento generar una pausa en el contador y guardar el valor
-*/
+    loadSong(currentSong)
+})
 
-/*RETURN SONG*/
-/*
--funcion que devuelve a 0 el valor de la variable que se va actualizando
--capturar un evento de click para asignarle esta funcion al boton return
-*/
+/*Prev song*/
+document.getElementById("prev-song").addEventListener("click", () => {
+    currentSong--
 
-/*ALEATORY SONG*/
+    if (currentSong < 0) {
+        currentSong = songs.length - 1
+    }
+
+    loadSong(currentSong)
+})
+
+/*Like song*/
+const fillHeart = document.getElementById("heart")
+
+fillHeart.addEventListener("click", () => {
+    if (fillHeart.getAttribute("fill") === "none") {
+        fillHeart.setAttribute("fill", "currentColor") 
+    } else {
+        fillHeart.setAttribute("fill", "none")
+    }
+})
+
+/*Pop sound effect when the song is liked*/
+const likeSound = document.getElementById("like-sound")
+const likeButton = document.getElementById("like")
+
+likeButton.addEventListener("click", () => {
+    likeSound.currentTime = 0
+    likeSound.volume = .25
+    likeSound.play()
+})
+
+/*Aleatory song*/
+document.getElementById("random").addEventListener("click", () => {
+    let randomSong
+
+    do {
+        randomSong = Math.floor(Math.random() * songs.length)
+    } while (randomSong === currentSong) /*no repeat current song*/
+
+    currentSong = randomSong
+    loadSong(currentSong)
+})
+
+loadSong(currentSong)

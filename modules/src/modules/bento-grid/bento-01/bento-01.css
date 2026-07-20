@@ -9,7 +9,7 @@
     --font-size-md: 18px;
     --container-bg-color: #131a0b;
     --element-bg-color: #3f4725;
-    --border-radius: 1.2rem;
+    --radius: 1.2rem;
 }
 
 *::-webkit-scrollbar {
@@ -46,14 +46,13 @@ body {
     padding: 8px;
     width: 100%;
     background-color: var(--container-bg-color);
-    border-radius: var(--border-radius);
+    border-radius: var(--radius);
 }
 .element {
     position: relative;
     overflow: hidden;
     width: 100%;
     height: 100%;
-    border-radius: var(--border-radius);
 }
 
 /*DISTRIBUTION*/
@@ -115,7 +114,12 @@ body {
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    padding: .5rem;
     border: none;
+}
+
+.element:nth-child(2), .element:nth-child(3) {
+    border-radius: var(--radius);
 }
 
 .presentation {
@@ -135,7 +139,7 @@ body {
     overflow: hidden;
     padding: .5rem;
     border: 1px dashed var(--element-bg-color);
-    border-radius: var(--border-radius);
+    border-radius: var(--radius);
 }
 .work > time {
     font-size: var(--font-size-xs);
@@ -154,32 +158,72 @@ body {
 .element:nth-child(4), .element:nth-child(6), .element:nth-child(5) {
     overflow-y: scroll;
     text-align: start;
-    padding: 0.5rem;
     border: none;
     max-height: 340px;
     color: var(--element-bg-color);
 }
 
-.element:nth-child(7) {
+.element:nth-child(7), .element:nth-child(8) {
     overflow-y: scroll;
-}
-
-.stack-container, .social-media-container {
+    text-align: start;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     gap: .5rem;
 }
 
-.stack, .social-media {
-    height: 60px;
-    width: 60px;
-    background-color: var(--element-bg-color);
-    border-radius: var(--border-radius);
+.media-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
 }
 
-.social-media-container {
-    flex-wrap: nowrap;
+.stack {
+    font-size: var(--font-size-xs);
+    padding-inline: .5rem;
+    padding-block: .25rem;
+    width: auto;
+    color: var(--container-bg-color);
+    background-color: var(--element-bg-color);
+    border-radius: var(--radius);
+}
+
+.media {
+    height: 80px;
+    width: 80px;
+    background-color: var(--element-bg-color);
+    border-radius: var(--radius);
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    width: 100%;
     height: 100%;
+}
+
+.quick-contact {
+    display: flex;
+    gap: .5rem;
+    width: 100%;
+}
+
+input, button {
+    outline: var(--element-bg-color);
+    padding: 1rem;
+    width: 100%;
+    border: 1px solid var(--element-bg-color);
+    border-radius: 12px;
+    color: var(--element-bg-color);
+    background-color: var(--container-bg-color);
+}
+button {
+    cursor: pointer;
+    font-family: inherit;
+    width: 30%;
+    color: var(--container-bg-color);
+    background-color: var(--element-bg-color);
 }
