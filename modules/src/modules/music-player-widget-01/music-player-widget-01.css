@@ -8,10 +8,8 @@
     --font-size-base: 16px;
     --font-size-lg: 32px;
 
-    --background-color: #2c2020;
-    --widget-bg-color: #ffffff;
-    --text-color-primary: #ffffff;
-    --text-color-secondary: #cfcfcf;
+    --color-primary: #ffffff;
+    --color-secondary: #cfcfcf;
 
     --image-radius: 0.75rem;
     --container-radius: 1.25rem;
@@ -24,7 +22,7 @@ body {
     align-items: center;
     width: 100%;
     height: 100vh;
-    color: var(--text-color-primary);
+    color: var(--color-primary);
     background: linear-gradient(45deg, #292764 40%, #822b8d 100%);
 }
 
@@ -35,7 +33,7 @@ body {
 .player-widget {
     padding: 0.75rem;
     width: 360px;
-    height: 550px;
+    height: auto;
     border-radius: var(--container-radius);
 
     background: rgba(255, 255, 255, 0.12);
@@ -61,6 +59,11 @@ body {
     border-radius: var(--image-radius);
 }
 
+.song-data {
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
 .widget-data {
     display: flex;
     flex-direction: column;
@@ -77,31 +80,60 @@ body {
 }
 
 .description {
-    color: var(--text-color-secondary);
+    color: var(--color-secondary);
+}
+
+.widget-progress {
+    margin-top: 0.5rem;
+}
+
+.progress {
+    position: relative;
+    width: 100%;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.progress-fill {
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    background: var(--color-secondary);
+    border-radius: 999px;
 }
 
 .progress-bar {
     -webkit-appearance: none;
     appearance: none;
+    position: absolute;
     width: 100%;
     height: 0.5rem;
     border-radius: 0.25rem;
-    background-color: #e0e0e01f;
+    background-color: transparent;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
 }
 
 .minutes {
     font-size: 0.75rem;
     display: flex;
     justify-content: space-between;
-    margin-top: 0.25rem;
-    color: var(--text-color-secondary);
+    margin-top: 0.5rem;
+    color: var(--color-secondary);
 }
 
 .widget-controls-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 0.5rem;
+    margin-top: .25rem;
 }
 
 .widget-controls {
@@ -116,11 +148,14 @@ button {
     border: none;
     cursor: pointer;
 
-    color: var(--text-color-primary);
+    color: var(--color-primary);
 }
 
 .play-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: .8rem;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.12);
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
 }

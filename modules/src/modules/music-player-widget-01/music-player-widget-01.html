@@ -9,17 +9,17 @@
     <body>
         <audio id="audio" src="" class="audio" controls></audio>
         <audio id="like-sound" src="./sfx/pop.mp3" class="audio" controls></audio>
-        <article class="player-widget">
+        <div class="player-widget">
             <div class="image-container">
                 <img id="cover" src="" alt="" class="my-image">
             </div>
             <div class="widget-data">
                 <div class="widget-title">
-                    <div>
+                    <div class="song-data">
                         <h2 id="title"></h2>
-                        <span id="artist" class="description"></span>
-                        <span class="description">-</span>
                         <span id="album" class="description"></span>
+                        <span class="description">-</span>
+                        <span id="artist" class="description"></span>
                     </div>
                     <button id="like">
                         <svg id="heart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart">
@@ -29,10 +29,13 @@
                     </button>
                 </div>
                 <div class="widget-progress">
-                    <input id="progress" type="range" min="0" max="100" value="0" class="progress-bar">
+                    <div class="progress">
+                        <div id="progress-fill" class="progress-fill"></div>
+                        <input id="progress" type="range" min="0" max="100" value="0" class="progress-bar">
+                    </div>
                     <div class="minutes">
-                        <time  datetime="">1:23</time>
-                        <time  datetime="">3:47</time>
+                        <time id="currentTime" datetime="">0:00</time>
+                        <time id="duration" datetime=""></time>
                     </div>
                 </div>
                 <div class="widget-controls-container">
@@ -53,7 +56,7 @@
                                 <path d="M4 4a1 1 0 0 1 .993 .883l.007 .117v14a1 1 0 0 1 -1.993 .117l-.007 -.117v-14a1 1 0 0 1 1 -1z" />
                             </svg>
                         </button>
-                        <button id="pause" class="play-button">
+                        <button id="play-button" class="play-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-player-play">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
@@ -76,11 +79,7 @@
                     </button>
                 </div>
             </div>
-        </article>
+        </div>
         <script src="index.js"></script>
     </body>
 </html>
-
-<!--
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-player-pause"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" /><path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" /></svg>
--->

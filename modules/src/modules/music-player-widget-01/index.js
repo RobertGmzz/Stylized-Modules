@@ -1,63 +1,168 @@
 const songs = [
-    { 
-        title: "Toxicity", 
+    {
+        title: "Sugar", 
         artist: "System of a Down", 
-        album: "Toxicity", 
-        duration: 240, 
-        cover: "./images/toxicity-cover.webp",
-        audio: "./songs/alexguz-funk.mp3",
+        album: "System of a Down", 
+        liked: false,
+        cover: "./images/soad.webp",
+        audio: "./songs/mickeyscat-moment.mp3",
     },
-    { 
+    {
         title: "Chop Suey", 
         artist: "System of a Down", 
         album: "Toxicity", 
-        duration: 240, 
+        liked: false, 
         cover: "./images/toxicity-cover.webp",
+        audio: "./songs/alexguz-funk.mp3",
+    },
+    {
+        title: "Roullete", 
+        artist: "System of a Down", 
+        album: "Steal This Album!", 
+        liked: false, 
+        cover: "./images/steal.webp",
         audio: "./songs/kontraa-water.mp3",
     },
-    { 
+    {
         title: "B.Y.O.B", 
         artist: "System of a Down", 
         album: "Mezmerize", 
-        duration: 240, 
+        liked: false,
         cover: "./images/mezmerize-cover.webp",
         audio: "./songs/mickeyscat-moment.mp3",
+    },
+    {
+        title: "Lonely Day", 
+        artist: "System of a Down", 
+        album: "Toxicity", 
+        liked: false, 
+        cover: "./images/hypno.webp",
+        audio: "./songs/alexguz-funk.mp3",
     },
 ]
 
 let currentSong = 0
+
+const playICON = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-player-play"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" /></svg>`
+
+const pauseICON = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-player-pause"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" /><path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" /></svg>`
+
+const title = document.getElementById("title")
+const artist = document.getElementById("artist")
+const album = document.getElementById("album")
+const cover = document.getElementById("cover")
+const heart = document.getElementById("heart")
 const audio = document.getElementById("audio")
+const likeSound = document.getElementById("like-sound")
+const setLike = document.getElementById("like")
+const playButton = document.getElementById("play-button")
+const reload = document.getElementById("reload")
+const next = document.getElementById("next-song")
+const prev = document.getElementById("prev-song")
+const random = document.getElementById("random")
+const progress = document.getElementById("progress")
+const currentTime = document.getElementById("currentTime")
+const duration = document.getElementById("duration")
+const progressFill = document.getElementById("progress-fill")
 
-function loadSong(index) {
-    const song = songs[index]
+/*Format seconds to minutes*/
+function toMinutes(seconds) {
+    const minutes = Math.floor(seconds / 60)
+    const secs = Math.floor(seconds % 60)
 
-    document.getElementById("title").textContent = song.title
-    document.getElementById("artist").textContent = song.artist
-    document.getElementById("album").textContent = song.album
-    document.getElementById("cover").src = song.cover
-    audio.src = song.audio
-    audio.volume = .1
-    audio.play()
+    return `${minutes}:${secs.toString().padStart(2, "0")}`
 }
 
-/*Pause/Play song*/
-document.getElementById("pause").addEventListener("click", () => {
+/*Duration of the song in minutes*/
+audio.addEventListener("loadedmetadata", () => {
+    progress.max = audio.duration
+    duration.textContent = toMinutes(audio.duration)
+})
+
+/*Update input progress value and current time of the song in minutes*/
+audio.addEventListener("timeupdate", () => {
+    progress.value = audio.currentTime
+    currentTime.textContent = toMinutes(audio.currentTime)
+
+    const percent = (audio.currentTime / audio.duration) * 100
+    progressFill.style.width = `${percent}%`
+})
+
+/*Handle input manually*/
+progress.addEventListener("input", () => {
+    audio.currentTime = progress.value
+    const percent = (progress.value / progress.max) * 100
+    progressFill.style.width = `${percent}%`
+})
+
+/*Load next song when song ended */
+function autoNextSong() {
+    currentSong = (currentSong + 1) % songs.length
+
+    loadSong(currentSong)
+}
+
+audio.addEventListener("ended", () => {
+    setTimeout(autoNextSong, 1000)
+})
+
+/*Load data of the song*/
+function renderSong() {
+    const song = songs[currentSong]
+
+    title.textContent = song.title
+    artist.textContent = song.artist
+    album.textContent = song.album
+    cover.src = song.cover
+
+    heart.setAttribute("fill", songs[currentSong].liked ? "currentColor" : "none")
+}
+
+/*Load songs*/
+function loadSong(index) {
+    audio.src = songs[index].audio
+    audio.volume = .05 /*Volume of the song*/
+    audio.play()
+
+    renderSong()
+}
+
+/*Like/Unlike song*/
+function handleLike(index) {
+    songs[index].liked = !songs[index].liked
     
+    if (songs[index].liked === true) {
+        likeSound.currentTime = 0
+        likeSound.volume = .25
+        likeSound.play()
+    }
+    
+    renderSong()
+}
+
+setLike.addEventListener("click", () => {
+    handleLike(currentSong)
+})
+
+/*pause/Play song*/
+playButton.addEventListener("click", () => {
     if (audio.paused) {
         audio.play()
+        playButton.innerHTML = pauseICON
     } else {
         audio.pause()
+        playButton.innerHTML = playICON
     }
 })
 
 /*Reload song*/
-document.getElementById("reload").addEventListener("click", () => {
+reload.addEventListener("click", () => {
     audio.currentTime = 0
     audio.play()
 })
 
 /*Next song*/
-document.getElementById("next-song").addEventListener("click", () => {
+next.addEventListener("click", () => {
     currentSong++
 
     if (currentSong >= songs.length) {
@@ -68,7 +173,7 @@ document.getElementById("next-song").addEventListener("click", () => {
 })
 
 /*Prev song*/
-document.getElementById("prev-song").addEventListener("click", () => {
+prev.addEventListener("click", () => {
     currentSong--
 
     if (currentSong < 0) {
@@ -78,29 +183,8 @@ document.getElementById("prev-song").addEventListener("click", () => {
     loadSong(currentSong)
 })
 
-/*Like song*/
-const fillHeart = document.getElementById("heart")
-
-fillHeart.addEventListener("click", () => {
-    if (fillHeart.getAttribute("fill") === "none") {
-        fillHeart.setAttribute("fill", "currentColor") 
-    } else {
-        fillHeart.setAttribute("fill", "none")
-    }
-})
-
-/*Pop sound effect when the song is liked*/
-const likeSound = document.getElementById("like-sound")
-const likeButton = document.getElementById("like")
-
-likeButton.addEventListener("click", () => {
-    likeSound.currentTime = 0
-    likeSound.volume = .25
-    likeSound.play()
-})
-
 /*Aleatory song*/
-document.getElementById("random").addEventListener("click", () => {
+random.addEventListener("click", () => {
     let randomSong
 
     do {
